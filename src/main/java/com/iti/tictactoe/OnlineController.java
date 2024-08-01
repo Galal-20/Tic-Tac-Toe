@@ -287,6 +287,9 @@ if(!isPlayerOneTurn)
 
     @FXML
     private void ExitButton(ActionEvent event) throws IOException {
+        writingRecordedMoves();
+        record_btn.setDisable(false);
+        isRecording = false;
         UiUtils.playSoundEffect();
         Optional<ButtonType> result = AlertUtils.showConfirmationAlert("Leave Game",
                 "Are you sure you want to quit playing and leave the game?",
