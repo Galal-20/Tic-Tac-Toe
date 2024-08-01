@@ -61,9 +61,6 @@ public class ListOfUsers {
         Thread.sleep(300);
         Gson gson = new Gson();
         JsonObject usernameResponse = gson.fromJson(message, JsonObject.class);
-        // String usernameResponse = reponse.get("message").getAsString();
-        //Read username response
-        //  JsonObject usernameResponse = socketManager.receiveJson(JsonObject.class);
         if (usernameResponse.get("success").getAsBoolean()) {
             username = usernameResponse.get("message").getAsString();
             Platform.runLater(() -> playerName.setText("Hello " + username));
