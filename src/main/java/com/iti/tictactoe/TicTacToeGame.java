@@ -38,7 +38,7 @@ public class TicTacToeGame extends Application {
             Scene splashScene = new Scene(root);
             stage.setScene(splashScene);
 
-            stage.setFullScreen(false);
+            stage.setFullScreen(true);
             stage.setResizable(true);
             stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH); // Disable ESC to exit full-screen
 
