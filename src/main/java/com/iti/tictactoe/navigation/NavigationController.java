@@ -1,5 +1,6 @@
 package com.iti.tictactoe.navigation;
 
+import com.iti.tictactoe.ListOfUsers;
 import com.iti.tictactoe.SocketManager;
 import com.iti.tictactoe.models.AlertUtils;
 import javafx.fxml.FXMLLoader;
@@ -9,11 +10,14 @@ import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Consumer;
 
 public class NavigationController {
     private final Stage stage;
     private final NavigationHistory navHistory = new NavigationHistory();
+    //private final Map<String, Object> controllers = new HashMap<>();
 
     // Initialize the main stage
     public NavigationController(Stage stage) {
@@ -27,12 +31,13 @@ public class NavigationController {
             Parent root = loader.load();
             Object controller = loader.getController();
             action.accept(controller);
+            //controllers.put(filePath, controller); // Store the controller
             Scene scene = new Scene(root);
             navHistory.pushScene(scene); // Save the scene in our stack
             stage.setScene(scene);
             stage.setResizable(true);
             stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH); // Disable ESC to exit full-screen
-            stage.setFullScreen(false);
+            stage.setFullScreen(true);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -48,7 +53,7 @@ public class NavigationController {
                 stage.setScene(currentScene);
                 stage.show();
                 stage.setResizable(true);
-                stage.setFullScreen(false);
+                stage.setFullScreen(true);
             } else {
                 System.out.println("No scene available to display.");
             }
@@ -66,4 +71,14 @@ public class NavigationController {
             popScene();
         }
     }
+/*
+    // Retrieve a specific controller based on the FXML file path
+    public Object getController(String filePath) {
+        return controllers.get(filePath);
+    }
+
+    // Retrieve ListOfUsersController specifically
+    public ListOfUsers getListOfUsersController() {
+        return (ListOfUsers) controllers.get("/path/to/ListOfUsers.fxml"); // Update path as needed
+    }*/
 }

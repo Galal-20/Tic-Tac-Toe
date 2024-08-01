@@ -123,7 +123,7 @@ public class ListOfUsers {
                         JsonObject userObject = element.getAsJsonObject();
                         String username = userObject.get("username").getAsString();
                         String status = userObject.get("status").getAsString();
-                        newPlayerList.add(username + "                          " + status);
+                        newPlayerList.add(username + "                                         " + status);
                     }
                 }
                 Platform.runLater(() -> {
