@@ -28,7 +28,6 @@ import javafx.util.Duration;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
@@ -300,6 +299,7 @@ if(!isPlayerOneTurn)
             // Handle UI updates and other actions
 
             handleExitAction();
+            resetGame();
         }
     }
 
@@ -320,6 +320,30 @@ if(!isPlayerOneTurn)
             UiUtils.playSoundEffect(); // Optional: play sound effect on navigation
             navController.popScene();
         }
+    }
+
+
+    private void resetGame() {
+        Button[] buttons = {button00, button01, button02,
+                button10, button11, button12,
+                button20, button21, button22};
+        for (int i = 0; i < buttons.length; i++) {
+            resetButtonToItsOriginalState(buttons[i]);
+        }
+        isPlayerOneTurn = true;  // Reset to player one's turn
+        // Reset the board
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                board[i][j] = 0;
+            }
+        }
+        winnerSound.stop();
+
+    }
+
+    private void resetButtonToItsOriginalState(Button button) {
+        button.setGraphic(null);
+        button.getStyleClass().removeAll("winning-button-x", "winning-button-o");
     }
 
     private void sendExitGameRequest() throws IOException {
@@ -537,41 +561,41 @@ if(!isPlayerOneTurn)
         isRecording = false;
     }
 
-    private void resetGame() {
-        Button[] buttons = {button00, button01, button02,
-                button10, button11, button12,
-                button20, button21, button22};
-        for (int i = 0; i < buttons.length; i++) {
-            resetButtonToItsOriginalState(buttons[i]);
-        }
-        isPlayerOneTurn = true;  // Reset to player one's turn
-        // Reset the board
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                board[i][j] = 0;
-            }
-        }
-        winnerSound.stop();
-
-    }
-
-    private void resetButtonToItsOriginalState(Button button) {
-        button.setGraphic(null);
-        button.getStyleClass().removeAll("winning-button-x", "winning-button-o");
-    }
-
-    public void handleRestartButton(ActionEvent actionEvent) {
-        UiUtils.playSoundEffect();
-        Optional<ButtonType> result = AlertUtils.showConfirmationAlert("Restart Game", "Are you sure you want to restart the game?", "This will clear the current game state.");
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            resetGame();
-            setButtonDisabledToPreventUserAtComputerTurns(false);
-            record_btn.setDisable(false);
-            writingRecordedMoves();
-            isRecording = false;
-        }
-    }
-  
+//    private void resetGame() {
+//        Button[] buttons = {button00, button01, button02,
+//                button10, button11, button12,
+//                button20, button21, button22};
+//        for (int i = 0; i < buttons.length; i++) {
+//            resetButtonToItsOriginalState(buttons[i]);
+//        }
+//        isPlayerOneTurn = true;  // Reset to player one's turn
+//        // Reset the board
+//        for (int i = 0; i < 3; i++) {
+//            for (int j = 0; j < 3; j++) {
+//                board[i][j] = 0;
+//            }
+//        }
+//        winnerSound.stop();
+//
+//    }
+//
+//    private void resetButtonToItsOriginalState(Button button) {
+//        button.setGraphic(null);
+//        button.getStyleClass().removeAll("winning-button-x", "winning-button-o");
+//    }
+//
+//    public void handleRestartButton(ActionEvent actionEvent) {
+//        UiUtils.playSoundEffect();
+//        Optional<ButtonType> result = AlertUtils.showConfirmationAlert("Restart Game", "Are you sure you want to restart the game?", "This will clear the current game state.");
+//        if (result.isPresent() && result.get() == ButtonType.OK) {
+//            resetGame();
+//            setButtonDisabledToPreventUserAtComputerTurns(false);
+//            record_btn.setDisable(false);
+//            writingRecordedMoves();
+//            isRecording = false;
+//        }
+//    }
+//
     /*public void handleRestartButton(ActionEvent actionEvent) throws IOException, InterruptedException {
         UiUtils.playSoundEffect();
 //        Optional<ButtonType> result = AlertUtils.showConfirmationAlert("Restart Game", "Are you sure you want to restart the game?", "This will clear the current game state.");
